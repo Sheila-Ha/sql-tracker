@@ -21,10 +21,11 @@ by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue
     
 
 ## Installation
-- Install into your terminal  
-  - npm i inquirer@8.2.4  
-  - npm i mysql2  
-- 
+- In order type the follow commands into your terminal to install the needed dependancies.
+  - npm init
+  - npm install npm i inquirer@8.2.4  
+  - npm install i mysql2
+  - install console-table
     
   
   ### User Story
@@ -58,9 +59,8 @@ THEN I am prompted to select an employee to update and their new role and this i
   [My Wireframe]()
       
 ## Usage 
-  - Node.js with the Inquire (collecting user input) and Jest (running tests) package will assist in making the function of this application come to life.  
-  - There will be a series of prompt to assist with building your logo.  
-  - Once your prompt are finished you will be able to see the SVG image in a browser.
+  - In the termianl command line type in 
+    - npm start
 
    ![Screenshot](utils/node_index.js_questions.png)
 
@@ -94,11 +94,7 @@ This project is licensed under MIT
 
 
 ## Testing
-Testing your README.md  
-1. complete all the prompts  
-2. verify your responses we generated into README.md file  
-3. verify all links are redirecting to outside source or directing you within README.md
-
+There is currently no testing in place
     
 
 ## Questions
