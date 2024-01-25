@@ -105,10 +105,10 @@ Testing your README.md
 If you have any questions, or additional feedback, please feel free to email me and I will respond as soon as possible.
     
 * Github -
-[https://github.com/Sheila-Ha/svg-logo](https://github.com/Sheila-Ha/sql-tracker)
+[https://github.com/Sheila-Ha/svg-logo](https://github.com/Sheila-Ha/sql-tracker.git)
 
 * Email -
-slhanson11@live.com hello hello hello 
+slhanson11@live.com
 
 ## Badges
 ![MDN Web Docs](https://img.shields.io/badge/MDN_Web_Docs-black?style=for-the-badge&logo=mdnwebdocs&logoColor=white)  
