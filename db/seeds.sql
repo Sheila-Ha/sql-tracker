@@ -1,18 +1,24 @@
-INSERT INTO employee (id, first_name, last_name, role id, manager_id)
-VALUES   (001, "Bob", "Miller"),
-         (002, "Ann", "Atwood"),
-         (003, "Sue", "Woods"),
-         (004, "Tom", "Anderson"),
-         (005, "Will", "Thomas"),
-         (006, "Amy", "Waters");
+INSERT INTO department (id,name)
+VALUES  ("Sales"),
+        ("Engineering"),
+        ("Finance"),
+        ("Legal");
+        
 
-INSERT INTO role (id, title, salary, department)
-VALUES  (001, 001, "data entry, 2000, development"),
-        (002, 002, "sales, 3000, sales"),
-        (003, 003, "lead engineer, 150000, engineering"),
-        (004, 004, "lawyer, 200000, legal"),
-        (005, 005, "accountant, 175000, finance"),
-        (006, 006, "account manager, 160000, finance");
+INSERT INTO role (title,department_id,salary)
+VALUES  ("Sales Manager", 1, 100000),
+        ("Salesperson", 1, 75000),
+        ("Lawyer, 4, 300000"),
+        ("Accountant", 3, 150000),
+        ("Software Engineer", 2, 160000),
+        ("Lead Engineer", 2 175000),
+        ("Materials Engineer", 2, 160000);
 
-INSERT INTO department (id, name)
-VALUES  (001, )
+INSERT INTO employee (first_name,last_name,role id,manager_id)
+VALUES   ("Bob", "Miller", 1, 1),
+         ("Ann", "Atwood", 2, NULL),
+         ("Sue", "Woods", 3, 4),
+         ("Tom", "Anderson", 4, 3),
+         ("Will", "Thomas", 5, NULL),
+         ("Amy", "Waters", 6, 2),
+         ("ED", "Thompson", 6, NULL );
