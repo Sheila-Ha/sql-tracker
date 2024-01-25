@@ -105,7 +105,7 @@ Testing your README.md
 If you have any questions, or additional feedback, please feel free to email me and I will respond as soon as possible.
     
 * Github -
-[https://github.com/Sheila-Ha/svg-logo](https://github.com/Sheila-Ha/svg-logo)
+[https://github.com/Sheila-Ha/svg-logo](https://github.com/Sheila-Ha/sql-tracker)
 
 * Email -
 slhanson11@live.com
