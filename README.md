@@ -88,7 +88,8 @@ THEN I am prompted to select an employee to update and their new role and this i
 [Shields](https://shields.io/)  
 [tldraw](https://www.tldraw.com/)  
 
-## License 
+## License  
+![Github license](https://img.shields.io/badge/license-MIT-blue.svg)  
 This project is licensed under MIT
 
 
