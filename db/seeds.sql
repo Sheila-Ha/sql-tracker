@@ -1,9 +1,11 @@
+-- dept name --
 INSERT INTO department (id,department_name)
 VALUES  (1,"Sales"),
         (2,"Engineering"),
         (3,"Finance"),
         (4,"Legal");
 
+-- role in company --
 INSERT INTO role (title,department_id,salary)
 VALUES  ("Sales Manager", 1, 100000),
         ("Salesperson", 1, 75000),
@@ -13,6 +15,8 @@ VALUES  ("Sales Manager", 1, 100000),
         ("Lead Engineer", 2, 175000),
         ("Materials Engineer", 2, 160000);
 
+
+-- employees at company --
 INSERT INTO employee (id,first_name,last_name,role_id,manager_id)
 VALUES   (1, "Bob", "Miller", 1, NULL),
          (2, "Ann", "Atwood", 2, NULL),
