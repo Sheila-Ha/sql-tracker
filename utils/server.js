@@ -31,6 +31,68 @@ function getAllDepartments() {
   });
 }
 
+function getAllRoles(){
+  db.query("SELECT * FROM roles"), function (err,results) {
+    console.log(results);
+    return results;
+  }
+}
+
+// function getAllEmployees(){
+//   db.query("SELECT * FROM employee"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getAddADepartment(){
+//   db.query("SELECT * FROM a department"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getAddARoll(){
+//   db.query("SELECT * FROM a role"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getAddAnEmployee(){
+//   db.query("SELECT * FROM an employee"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getUpdateAnEmployeeRoll(){
+//   db.query("SELECT * FROM an employee role"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getRemoveADepartment(){
+//   db.query("SELECT * FROM a department"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getRemoveARole(){
+//   db.query("SELECT * FROM a role"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
+
+// function getAddAnEmployee(){
+//   db.query("SELECT * FROM an employee"), function (err,results) {
+//     console.log(results);
+//     return results;
+//   }
+// }
 //
 //const viewAllDepartments
 
@@ -91,5 +153,14 @@ function addEmployee() {
 //console.log('initializing the app...');
 
 module.exports = {
-  getAllDepartments: getAllDepartments
+  getAllDepartments: getAllDepartments,
+  getAllRoles: getAllRoles,
+  getAllEmployees: getAllEmployees,
+  getAddADepartment: getAddADepartment,
+  getAddARole: getAddARole,
+  getAddAnEmployee: getAddAnEmployee,
+  getUpdateAnEmployeeRole: getUpdateAnEmployeeRole,
+  getRemoveADepartment: getRemoveADepartment,
+  getRemoveARole: getRemoveARole,
+  getRemoveAnEmployee: getRemoveAnEmployee
 };

@@ -38,25 +38,25 @@ function processResponse(response) {
     server.getAllEmployees();
   }
   if (response === "Add a department") {
-    addADepartment();
+    server.getAddADepartment();
   }
   if (response === "Add a role") {
-    addARole();
+    server.getAddARole();
   }
   if (response === "Add an employee") {
-    addAnEmployee();
+    server.getAddAnEmployee();
   }
   if (response === "Update an employee role") {
-    updateAEmployeeRole();
+    server.getUpdateAEmployeeRole();
   }
   if (response === "Remove a department") {
-    removeADepartment();
+    server.getRemoveADepartment();
   }
   if (response === "Remove a role") {
-    removeARole();
+    server.getRemoveARole();
   }
   if (response === "Remove an employee") {
-    removeAnEmployee();
+    server.getRemoveAnEmployee();
   }
 }
 
