@@ -20,58 +20,69 @@ const promptUser = () => {
         type: "list",
         message: "Select from options below",
         choices: [
-          "View All departments",
-          "View All roles",
-          "View All employees",
-          "add a department",
-          "add a role",
-          "add an employee",
-          "update a employee role",
+          "View all departments",
+          "View all roles",
+          "View all employees",
+          "Add a department",
+          "Add a role",
+          "Add an employee",
+          "Update an employee role",
         ],
       },
     ])
-    // based on chosen choices then view/add or update
+    // based on chosen prompt choices then view/add or update
     .then((answers) => {
       const {choices} = answers;
-      if (choices === "View All departments") {
+      if (choices === "View all departments") {
         viewAllDepartments();
       }
-      if (choices === "View All roles") {
+      if (choices === "View all roles") {
         viewAllRoles();
       }
-      if (choices === "View All employees") {
+      if (choices === "View all employees") {
         viewAllEmployees();
       }
-      if (choices === "add a department") {
+      if (choices === "Add a department") {
         addADepartment();
       }
-      if (choices === "add a role") {
+      if (choices === "Add a role") {
         addARole();
       }
-      if (choices === "add an employee") {
+      if (choices === "Add an employee") {
         addAnEmployee();
       }
-      if (choices === "update a employee role") {
+      if (choices === "Update an employee role") {
         updateAEmployeeRole();
       };
     })
   };
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) { // function
-  fs.writeFileSync(fileName, data); // write file (synchronous version)
-}
 
-// TODO: Create a function to initialize app
-function init() {
-  inquirer.prompt(questions).then((responses) => { //ask questions, then proceed with responses
-    //console.log(responses);
-    //console.log(responses.description);
-    writeToFile("dist/README.md", generateEmployee(responses)); //write a new readme file from responses using generateMarkdown
-    //console.log("Creating your Employee File...");
-  }).catch((err) => {
-    //console.log(err);
-  });
-}
-//function call to initialize
-init();
+
+
+
+
+
+
+
+
+
+
+// // TODO: Create a function to write README file
+// function writeToFile(fileName, data) { // function
+//   fs.writeFileSync(fileName, data); // write file (synchronous version)
+// }
+
+// // TODO: Create a function to initialize app
+// function init() {
+//   inquirer.prompt(questions).then((responses) => { //ask questions, then proceed with responses
+//     //console.log(responses);
+//     //console.log(responses.description);
+//     writeToFile("dist/README.md", generateEmployee(responses)); //write a new readme file from responses using generateMarkdown
+//     //console.log("Creating your Employee File...");
+//   }).catch((err) => {
+//     //console.log(err);
+//   });
+// }
+// //function call to initialize
+// init();
 //console.log('initializing the app...'); 
