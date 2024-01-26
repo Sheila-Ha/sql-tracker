@@ -11,7 +11,7 @@ const db = mysql.createConnection({
   database: "employee_db",
 });
 
-// questions for user input
+//user prompted for choices 
 const promptUser = () => {
   inquirer
     .prompt([ 
@@ -30,73 +30,32 @@ const promptUser = () => {
         ],
       },
     ])
-
-      // {
-      //   type: "input",
-      //   name: "name",
-      //   message: "What is th name of the department?",
-      // },
-      // /*{
-      //   Added Service to the database,
-      // },*/
-      // {
-      //   type: "input",
-      //   name: "would like",
-      //   message: "What would you like to do?",
-      // },
-      // {
-      //   type: "input",
-      //   name: "role name",
-      //   message: "What is the name of the role?",
-      // },
-      // {
-      //   type: "input",
-      //   name: "salary",
-      //   message: "What is the salary of the role?",
-      // },
-      // {
-      //   type: "input",
-      //   name: "belong to",
-      //   message: "Which department does the role belong to?",
-      // },
-      // /*{
-      //   Add Customer Service to the database;
-      // },*/
-      // {
-      //   type: "input",
-      //   name: "like to do",
-      //   message: "What would you like to do?",
-      // },
-      // {
-      //   type: "input",
-      //   name: "first name",
-      //   message: "What is the employee's first name?",
-      // },
-      // {
-      //   type: "input",
-      //   name: "last name",
-      //   message: "What is the employees last name?",
-      // },
-      // {
-      //   type: "rawlist",
-      //   name: "emp role",
-      //   message: "What is the employee's role?",
-      //   choices: ["Salesperson", "Lead Engineer", "Software Engineer", "Account Manager", "Accountant", "Legal Team Lead", "Lawyer"],
-      },
-      // {
-      //   type: "editor",
-      //   name: "contributing",
-      //   message: "What are contributing sources?",
-      // },
-      // {
-      //   type: "rawlist", //select 1 from choices
-      //   name: "license",
-      //   message: "Select a license for your project",
-      //   choices: ["MIT", "APACHE2.0", "Boost1.0", "MPL2.0", "BSD3", "GNU3", "none"],
-      // },
-    });
+    // based on chosen choices then view/add or update
+    .then((answers) => {
+      const {choices} = answers;
+      if (choices === "View All departments") {
+        viewAllDepartments();
+      }
+      if (choices === "View All roles") {
+        viewAllRoles();
+      }
+      if (choices === "View All employees") {
+        viewAllEmployees();
+      }
+      if (choices === "add a department") {
+        addADepartment();
+      }
+      if (choices === "add a role") {
+        addARole();
+      }
+      if (choices === "add an employee") {
+        addAnEmployee();
+      }
+      if (choices === "update a employee role") {
+        updateAEmployeeRole();
+      };
+    })
   };
-
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) { // function
   fs.writeFileSync(fileName, data); // write file (synchronous version)
