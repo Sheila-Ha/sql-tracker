@@ -4,8 +4,9 @@
   "description": "SQL employee tracker",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  
   },
   "author": "Sheila Hanson",
   "license": "MIT",
