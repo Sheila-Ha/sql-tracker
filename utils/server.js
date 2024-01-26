@@ -35,6 +35,9 @@ const promptUser = () => {
           "Add a role",
           "Add an employee",
           "Update an employee role",
+          "Remove a department",
+          "Remove a role",
+          "Remove an employee",
         ],
       },
     ])
@@ -61,6 +64,15 @@ const promptUser = () => {
       }
       if (choices === "Update an employee role") {
         updateAEmployeeRole();
+      }
+      if (choices === "Remove a department") {
+        removeADepartment();
+      }
+      if (choices === "Remove a role") {
+        removeARole();
+      }
+      if (choices === "Remove an employee") {
+        removeAnEmployee();
       }
     });
 };
@@ -94,7 +106,7 @@ inquirer.prompt([
     type:"list",
     name:"roles",
     message:"What is the employee's role?",
-    choices: rolelist
+    choices: addARole,
   },
   {
     type:"confirm",
