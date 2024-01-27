@@ -1,6 +1,6 @@
 // Include packages needed for this application
 const inquirer = require("inquirer"); //npm special software - const variable can not be reassigned
-const mysql = require("mysql2");
+const mysql = require('mysql2/promise');
 const express = require('express');
 
 const PORT = process.env.PORT || 3001;
@@ -9,14 +9,14 @@ const app = express ();
 let roleChoices = [];
 
 //sql connection to database
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "employees_db"
-},
-console.log(`Connected to the employees_db database.`)
-);
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "password",
+//   database: "employees_db"
+// },
+// console.log(`Connected to the employees_db database.`)
+// );
 
 // //connect to server and launch app
 // db.connect((err) => {
@@ -70,74 +70,135 @@ console.log(`Connected to the employees_db database.`)
 //   });
 // });
 
-function getAllDepartments() {
-  db.query("SELECT * FROM department", function (err, results) {
-    console.log(results);
-    return results;
+async function getAllDepartments() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM all department');
+  return rows;
 }
 
-function getAllRoles() {
-  db.query("SELECT * FROM role", function (err, results) {
-    console.log(results);
-    return results;
+async function getAllRoles() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM all roles');
+  return rows;
 }
 
-function getAllEmployees() {
-  db.query("SELECT * FROM employee", function (err, results) {
-    console.log(results);
-    return results;
+
+async function getAllEmployees() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM all employees');
+  return rows;
 }
 
-function addADepartment() {
-  db.query("SELECT * FROM a department", function (err, results) {
-    console.log(results);
-    return results;
+async function getAddDepartment() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM add department');
+  return rows;
 }
 
-function addARole() {
-  db.query("SELECT * FROM a role", function (err, results) {
-    console.log(results);
-    return results;
+async function getAddRole() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM add role');
+  return rows;
 }
 
-function addAnEmployee() {
-  db.query("SELECT * FROM an employee", function (err, results) {
-    console.log(results);
-    return results;
+async function getAddEmployee() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM add employee');
+  return rows;
 }
 
-function updateAnEmployeeRole() {
-  db.query("SELECT * FROM update an employee role", function (err, results) {
-    console.log(results);
-    return results;
+  async function getUpdateEmployeeRole() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM update employee role');
+  return rows;
 }
 
-function removeADepartment() {
-  db.query("SELECT * FROM a department", function (err, results) {
-    console.log(results);
-    return results;
+async function getRemoveDepartment() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM remove department');
+  return rows;
 }
 
-function removeARole() {
-  db.query("SELECT * FROM a role", function (err, results) {
-    console.log(results);
-    return results;
+async function getRemoveRole() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM remove role');
+  return rows;
 }
 
-function removeAnEmployee() {
-  db.query("SELECT * FROM an employee", function (err, results) {
-    console.log(results);
-    return results;
+async function getRemoveEmployee() {
+  console.log('hi')
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "employees_db"
   });
+
+  const [rows, fields]= await db.execute('SELECT * FROM remove employee');
+  return rows;
 }
 
 // const viewAllDepartments
@@ -210,13 +271,13 @@ app.listen(PORT, () => {
 
 module.exports = {
   getAllDepartments: getAllDepartments,
-  getAllRoles: getAllRoles,
-  getAllEmployees: getAllEmployees,
-  addADepartment: addADepartment,
-  addARole: addARole,
-  addAnEmployee: addAnEmployee,
-  updateAnEmployeeRole: updateAnEmployeeRole,
-  removeADepartment: removeADepartment,
-  removeARole: removeARole,
-  removeAnEmployee: removeAnEmployee,
+  // getAllRoles: getAllRoles,
+  // getAllEmployees: getAllEmployees,
+  // addADepartment: addADepartment,
+  // addARole: addARole,
+  // addAnEmployee: addAnEmployee,
+  // updateAnEmployeeRole: updateAnEmployeeRole,
+  // removeADepartment: removeADepartment,
+  // removeARole: removeARole,
+  // removeAnEmployee: removeAnEmployee,
 };
