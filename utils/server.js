@@ -12,12 +12,12 @@ const db = mysql.createConnection({
   database: "employees_db",
 });
 
-//connect to server and launch app
-/*db.connect((err) => {
-  if (err) throw err;
-  console.log("Hello, welcome to the Employee Tracker.");
-  //start();
-});*/
+// //connect to server and launch app
+// db.connect((err) => {
+//   if (err) throw err;
+//   console.log("Hello, welcome to the Employee Tracker.");
+//   //start();
+// });
 
 // db.query("SELECT * FROM role", function (err, results) {
 //   console.log(results);
@@ -31,106 +31,106 @@ function getAllDepartments() {
   });
 }
 
-function getAllRoles(){
-  db.query("SELECT * FROM roles"), function (err,results) {
+function getAllRoles() {
+  db.query("SELECT * FROM role", function (err, results) {
     console.log(results);
     return results;
-  }
+  });
 }
 
-// function getAllEmployees(){
-//   db.query("SELECT * FROM employee"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getAddADepartment(){
-//   db.query("SELECT * FROM a department"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getAddARoll(){
-//   db.query("SELECT * FROM a role"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getAddAnEmployee(){
-//   db.query("SELECT * FROM an employee"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getUpdateAnEmployeeRoll(){
-//   db.query("SELECT * FROM an employee role"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getRemoveADepartment(){
-//   db.query("SELECT * FROM a department"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getRemoveARole(){
-//   db.query("SELECT * FROM a role"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-
-// function getAddAnEmployee(){
-//   db.query("SELECT * FROM an employee"), function (err,results) {
-//     console.log(results);
-//     return results;
-//   }
-// }
-//
-//const viewAllDepartments
-
-//add employee function
-function addEmployee() {
-  const query = "";
-
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "firstName",
-      message: "What is the employee's first name?",
-    },
-    {
-      type: "input",
-      name: "lastName",
-      message: "What is the employee's last name?",
-    },
-    {
-      type: "list",
-      name: "roles",
-      message: "What is the employee's role?",
-      choices: roleChoices,
-    },
-    {
-      type: "confirm",
-      name: "supervisor",
-      message: "Does the employee have a manager?",
-    } /*,
-    {
-      type: "list",
-      name: "manager",
-      message: "Who is the employee's manager?",
-      choices: name,
-      when: (answers) => answers.supervisor,
-    },*/,
-  ]);
+function getAllEmployees() {
+  db.query("SELECT * FROM employee", function (err, results) {
+    console.log(results);
+    return results;
+  });
 }
+
+function addADepartment() {
+  db.query("SELECT * FROM a department", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function addARole() {
+  db.query("SELECT * FROM a role", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function addAnEmployee() {
+  db.query("SELECT * FROM an employee", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function updateAnEmployeeRole() {
+  db.query("SELECT * FROM update an employee role", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function removeADepartment() {
+  db.query("SELECT * FROM a department", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function removeARole() {
+  db.query("SELECT * FROM a role", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+function removeAnEmployee() {
+  db.query("SELECT * FROM an employee", function (err, results) {
+    console.log(results);
+    return results;
+  });
+}
+
+// const viewAllDepartments
+
+// //add employee function
+// function addEmployee() {
+//   const query = "";
+
+//   inquirer.prompt([
+//     {
+//       type: "input",
+//       name: "firstName",
+//       message: "What is the employee's first name?",
+//     },
+//     {
+//       type: "input",
+//       name: "lastName",
+//       message: "What is the employee's last name?",
+//     },
+//     {
+//       type: "list",
+//       name: "role",
+//       message: "What is the employee's role?",
+//       choices: roleChoices,
+//     },
+//     {
+//       type: "confirm",
+//       name: "supervisor",
+//       message: "Does the employee have a manager?",
+//     } /*,
+//     {
+//       type: "list",
+//       name: "manager",
+//       message: "Who is the employee's manager?",
+//       choices: name,
+//       when: (answers) => answers.supervisor,
+//     },*/,
+//   ]);
+// }
 
 // // TODO: Create a function to write README file
 // function writeToFile(fileName, data) { // function
@@ -156,11 +156,11 @@ module.exports = {
   getAllDepartments: getAllDepartments,
   getAllRoles: getAllRoles,
   getAllEmployees: getAllEmployees,
-  getAddADepartment: getAddADepartment,
-  getAddARole: getAddARole,
-  getAddAnEmployee: getAddAnEmployee,
-  getUpdateAnEmployeeRole: getUpdateAnEmployeeRole,
-  getRemoveADepartment: getRemoveADepartment,
-  getRemoveARole: getRemoveARole,
-  getRemoveAnEmployee: getRemoveAnEmployee
+  addADepartment: addADepartment,
+  addARole: addARole,
+  addAnEmployee: addAnEmployee,
+  updateAnEmployeeRole: updateAnEmployeeRole,
+  removeADepartment: removeADepartment,
+  removeARole: removeARole,
+  removeAnEmployee: removeAnEmployee,
 };

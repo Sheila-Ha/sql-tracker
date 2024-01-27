@@ -11,6 +11,7 @@
   "author": "Sheila Hanson",
   "license": "MIT",
   "dependencies": {
+    "colors": "^1.4.0",
     "inquirer": "^8.2.4",
     "mysql2": "^3.8.0"
   }

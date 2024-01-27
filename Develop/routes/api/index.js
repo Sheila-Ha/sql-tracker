@@ -1,6 +1,6 @@
 //dependencies//
 const inquirer = require("inquirer");
-const server = require("./utils/server");
+const server = require("../../../utils/server");
 //const mysql = require('mysql2');
 
 //const PORT = process.env.PORT || 3001;
@@ -11,7 +11,7 @@ const questions = [
   {
     type: "rawlist",
     name: "choices",
-    message: "Select from options below",
+    message: "What would you like to do?", 
     choices: [
       "View all departments",
       "View all roles",
@@ -38,26 +38,27 @@ function processResponse(response) {
     server.getAllEmployees();
   }
   if (response === "Add a department") {
-    server.getAddADepartment();
+    server.addADepartment();
   }
   if (response === "Add a role") {
-    server.getAddARole();
+    server.addARole();
   }
   if (response === "Add an employee") {
-    server.getAddAnEmployee();
+    server.addAnEmployee();
   }
   if (response === "Update an employee role") {
-    server.getUpdateAEmployeeRole();
+    server.updateAnEmployeeRole();
   }
   if (response === "Remove a department") {
-    server.getRemoveADepartment();
+    server.removeADepartment();
   }
   if (response === "Remove a role") {
-    server.getRemoveARole();
+    server.removeARole();
   }
   if (response === "Remove an employee") {
-    server.getRemoveAnEmployee();
+    server.removeAnEmployee();
   }
+  init();
 }
 
 function init() {
