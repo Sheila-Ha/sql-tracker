@@ -1,6 +1,6 @@
 //dependencies//
 const inquirer = require("inquirer");
-const server = require("../../../utils/server");
+const server = require("./utils/server");
 //const mysql = require('mysql2');
 
 //const PORT = process.env.PORT || 3001;
