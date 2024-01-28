@@ -8,69 +8,6 @@ const app = express();
 
 let roleChoices = [];
 
-//sql connection to database
-// const db = mysql.createConnection(
-//   {
-//     host: "localhost",
-//     user: "root",
-//     password: "password",
-//     database: "employees_db",
-//   },
-//   console.log(`Connected to the employees_db database.`)
-// );
-
-// //connect to server and launch app
-// db.connect((err) => {
-//   if (err) throw err;
-//   console.log("Hello, welcome to the Employee Tracker.");
-//   //start();
-// });
-
-// db.query("SELECT * FROM role", function (err, results) {
-//   console.log(results);
-//   roleChoices = results;
-// });
-
-// // create a new employee
-// app.post('/api/new-employee', ({ body }, res) => {
-//   const sql = `INSERT INTO employee (employee_name)
-//     VALUES (?)`;
-//   const params = [body.employee_name];
-
-//   db.query(sql, params, (err, result) => {
-//     if (err) {
-//       res.status(400).json({ error: err.message });
-//       return;
-//     }
-//     res.json({
-//       message: 'success',
-//       data: body,
-//    });
-//   });
-// });
-
-// // delete a employee
-// app.delete('/api/employee/:id', (req, res) => {
-//   const sql = `DELETE FROM employee WHERE id = ?`;
-//   const params = [req.params.id];
-
-//   db.query(sql, params, (err, result) => {
-//     if (err) {
-//       res.statusMessage(400).json({ error: res.message });
-//     } else if (!result.affectedRows) {
-//       res.json({
-//       message: 'Employee not found'
-//       });
-//     } else {
-//       res.json({
-//         message: 'deleted',
-//         changes: result.affectedRows,
-//         id: req.params.id
-//       });
-//     }
-//   });
-// });
-
 function getDBConnection() {
   return mysql.createConnection({
     host: "localhost",
@@ -104,6 +41,14 @@ async function getAllEmployees() {
   return rows;
 }
 
+async function getDepartmentNames() {
+  console.log("ahoy");
+  const db = await getDBConnection();
+  //GROUP_CONCAT: https://stackoverflow.com/questions/662207/mysql-results-as-comma-separated-list
+  const [rows, fields] = await db.execute("SELECT department_name FROM department");
+  return rows;
+}
+
 async function addDepartment(departmentName) {
   console.log("hola");
   const db = await getDBConnection();
@@ -112,11 +57,18 @@ async function addDepartment(departmentName) {
   return rows;
 }
 
-async function addRole() {
+async function addRole(roleInfo) {
   console.log("good day");
+  console.log(roleInfo);
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM add role");
+  const [rows1, fields1] = await db.execute(`SELECT id FROM department WHERE department_name="${roleInfo.choices}"`);
+  const departmentId = rows1[0].id;
+  console.log(departmentId);
+  const [rows, fields] = await db.execute(`INSERT INTO role (title, department_id, salary) 
+                                           VALUES ("${roleInfo.title}",
+                                           ${departmentId},
+                                           "${roleInfo.salary}")`);
   return rows;
 }
 
@@ -160,8 +112,6 @@ async function removeEmployee() {
   return rows;
 };
 
-// const viewAllDepartments
-
 // //add employee function
 // function addEmployee() {
 //   const query = "";
@@ -198,25 +148,6 @@ async function removeEmployee() {
 //   ]);
 // }
 
-// // TODO: Create a function to write README file
-// function writeToFile(fileName, data) { // function
-//   fs.writeFileSync(fileName, data); // write file (synchronous version)
-// }
-
-// // TODO: Create a function to initialize app
-// function init() {
-//   inquirer.prompt(questions).then((responses) => { //ask questions, then proceed with responses
-//     //console.log(responses);
-//     //console.log(responses.description);
-//     writeToFile("dist/README.md", generateEmployee(responses)); //write a new readme file from responses using generateMarkdown
-//     //console.log("Creating your Employee File...");
-//   }).catch((err) => {
-//     //console.log(err);
-//   });
-// }
-// //function call to initialize
-// init();
-//console.log('initializing the app...');
 
 //default response for any other request (Not Found)
 app.use((req, res) => {
@@ -231,6 +162,7 @@ module.exports = {
   getAllDepartments: getAllDepartments,
   getAllRoles: getAllRoles,
   getAllEmployees: getAllEmployees,
+  getDepartmentNames: getDepartmentNames,
   addDepartment: addDepartment,
   addRole: addRole,
   addEmployee: addEmployee,

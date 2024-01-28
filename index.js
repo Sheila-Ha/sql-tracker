@@ -27,33 +27,6 @@ const questions = [
   },
 ];
 
-const addDepartmentQuestions = [
-  {
-    type: "input",
-    name: "departmentName",
-    message: "Department name:"
-  }
-];
-
-const addRoleQuestions = [
-  {
-    type: "input",
-    name: "title",
-    message: "Role name:"
-  },
-  {
-    type: "input",
-    name: "Salary",
-    message: "Role salary:"
-  },
-  {
-    type: "rawlist",
-    name: "choices",
-    message: "Which department does the role belong to?",
-    choices: []
-  }  
-];
-
 async function processResponse(response) {
   if (response === "View all departments") {
     console.table(await server.getAllDepartments());
@@ -65,20 +38,10 @@ async function processResponse(response) {
     console.table(await server.getAllEmployees());
   }
   if (response === "Add department") {
-    // Prompt the user for department information
-    inquirer
-    .prompt(addDepartmentQuestions)
-    .then(async (response) => {
-      console.log("add department - " + response.departmentName);
-      // Pass the response to server.addDepartment
-      console.table(await server.addDepartment(response.departmentName));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    addDepartment();
   }
   if (response === "Add role") {
-    console.table(await server.addRole());
+    addRole();
   }
   if (response === "Add employee") {
     console.table(await server.addEmployee());
@@ -95,6 +58,69 @@ async function processResponse(response) {
   if (response === "Remove employee") {
     console.table(await server.removeEmployee());
   }
+}
+
+function addDepartment() {
+  const addDepartmentQuestions = [
+    {
+      type: "input",
+      name: "departmentName",
+      message: "Department name:"
+    }
+  ];
+  // Prompt the user for department information
+  inquirer
+  .prompt(addDepartmentQuestions)
+  .then(async (response) => {
+    console.log("add department - " + response.departmentName);
+    // Pass the response to server.addDepartment
+    console.table(await server.addDepartment(response.departmentName));
+  })
+  .catch((err) => {
+    console.log(err);
+  });  
+}
+
+async function addRole() {
+  // First, get all the current departments from the server
+  const departmentNames = await server.getDepartmentNames();
+  //console.log(departmentNames);
+  // Loop through the department names to create a list of choices
+  let choicesList = [];
+  for (let i = 0; i < departmentNames.length; i++) {
+    choicesList.push(departmentNames[i].department_name);
+  }
+  const addRoleQuestions = [
+    {
+      type: "input",
+      name: "title",
+      message: "Role name:"
+    },
+    {
+      type: "input",
+      name: "salary",
+      message: "Role salary:"
+    },
+    {
+      type: "rawlist",
+      name: "choices",
+      message: "Which department does the role belong to?",
+      choices: choicesList
+    }  
+  ];
+  // Second, prompt the user for the role info (using the departments list)
+  inquirer
+  .prompt(addRoleQuestions)
+  .then(async (response) => {
+    // Pass the response to server.addRole
+    console.table(await server.addRole(response));
+  })
+  .catch((err) => {
+    console.log(err);
+  });  
+  // Third, insert the role
+  //console.table(await server.addRole());
+  
 }
 
 function init() {
