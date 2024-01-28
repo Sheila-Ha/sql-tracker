@@ -1,4 +1,4 @@
-//dependencies//
+//Dependencies//
 const inquirer = require("inquirer");
 const server = require("./utils/server");
 //const mysql = require('mysql2');
@@ -6,7 +6,7 @@ const server = require("./utils/server");
 //const PORT = process.env.PORT || 3001;
 //const app = express();
 
-//user prompted for choices
+//User prompted for choices
 const questions = [
   {
     type: "rawlist",
@@ -136,6 +136,7 @@ async function addEmployee() {
   // Loop through the employee names to create a list of choices
   let managerChoicesList = [];
   for (let i = 0; i < employees.length; i++) {
+    // Concat first/last name
     managerChoicesList.push(employees[i].first_name + " " + employees[i].last_name);
   }
   const addEmployeeQuestions = [
@@ -152,13 +153,13 @@ async function addEmployee() {
     {
       type: "rawlist",
       name: "role",
-      message: "What is the employee's role",
+      message: "What is the employee's role?",
       choices: roleChoicesList
     },
     {
       type: "rawlist",
       name: "manager",
-      message: "Who is the employee's manager",
+      message: "Who is the employee's manager?",
       choices: managerChoicesList
     }
   ];
@@ -176,7 +177,7 @@ async function addEmployee() {
 }
 
 function init() {
-  //ask questions, then proceed with response
+  //Ask questions, then proceed with response
   inquirer
     .prompt(questions)
     .then((response) => {

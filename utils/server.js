@@ -74,7 +74,8 @@ async function addEmployee(employeeInfo) {
   const roleId = rows1[0].id;
   console.log(roleId);
   // Get manager ID (primary key)
-  // Escape tick \`
+  // Escape tick \`   
+  // Concat first/last name
   const [rows2, fields2] = await db.execute(`SELECT id FROM employee WHERE CONCAT(\`first_name\`, ' ', \`last_name\`) = "${employeeInfo.manager}";`);
   const managerId = rows2[0].id;
   console.log(managerId);
