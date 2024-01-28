@@ -27,63 +27,73 @@ const questions = [
   },
 ];
 
+const addDepartmentQuestions = [
+  {
+    type: "input",
+    name: "departmentName",
+    message: "Department name:"
+  }
+];
+
+const addRoleQuestions = [
+  {
+    type: "input",
+    name: "title",
+    message: "Role name:"
+  },
+  {
+    type: "input",
+    name: "Salary",
+    message: "Role salary:"
+  },
+  {
+    type: "rawlist",
+    name: "choices",
+    message: "Which department does the role belong to?",
+    choices: []
+  }  
+];
+
 async function processResponse(response) {
   if (response === "View all departments") {
     console.table(await server.getAllDepartments());
   }
-
-  async function processResponse(response) {
-    if (response === "View all roles") {
-      console.table(await server.getAddRoles());
-    }
+  if (response === "View all roles") {
+    console.table(await server.getAllRoles());
   }
-
-  async function processResponse(response) {
-    if (response === "View all employees") {
-      console.table(await server.getAllEmployees());
-    }
+  if (response === "View all employees") {
+    console.table(await server.getAllEmployees());
   }
-
-  async function processResponse(response) {
-    if (response === "View Add department") {
-      console.table(await server.getAddDepartment());
-    }
+  if (response === "Add department") {
+    // Prompt the user for department information
+    inquirer
+    .prompt(addDepartmentQuestions)
+    .then(async (response) => {
+      console.log("add department - " + response.departmentName);
+      // Pass the response to server.addDepartment
+      console.table(await server.addDepartment(response.departmentName));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
-
-  async function processResponse(response) {
-    if (response === "View Add role") {
-      console.table(await server.getAddRole());
-    }
+  if (response === "Add role") {
+    console.table(await server.addRole());
   }
-
-  async function processResponse(response) {
-    if (response === "View Add employee") {
-      console.table(await server.getAddEmployee());
-    }
+  if (response === "Add employee") {
+    console.table(await server.addEmployee());
   }
-
-  async function processResponse(response) {
-    if (response === "View Update employee role") {
-      console.table(await server.getUpdateEmployeeRole());
-    }
+  if (response === "Update employee role") {
+    console.table(await server.updateEmployeeRole());
   }
-
-  async function processResponse(response) {
-    if (response === "View Remove department") {
-      console.table(await server.getRemoveDepartment());
-    }
+  if (response === "Remove department") {
+    console.table(await server.removeDepartment());
   }
-
-  async function processResponse(response) {
-    if (response === "View Remove role") {
-      console.table(await server.getRemoveRole());
-    }
+  if (response === "Remove role") {
+    console.table(await server.removeRole());
   }
-
-  async function processResponse(response) {
-    if (response === "View Remove employee") {
-      console.table(await server.getRemoveEmployee());
-    }
+  if (response === "Remove employee") {
+    console.table(await server.removeEmployee());
   }
 }
 
