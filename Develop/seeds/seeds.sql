@@ -6,14 +6,14 @@ VALUES  (1,"Sales"),
         (4,"Legal");
 
 -- role in company --
-INSERT INTO role (title,department_id,salary)
-VALUES  ("Sales Manager", 1, 100000),
-        ("Salesperson", 1, 75000),
-        ("Lawyer", 4, 300000),
-        ("Accountant", 3, 150000),
-        ("Software Engineer", 2, 160000),
-        ("Lead Engineer", 2, 175000),
-        ("Materials Engineer", 2, 160000);
+INSERT INTO role (id,title,department_id,salary)
+VALUES  (1,"Sales Manager", 1, 100000),
+        (2,"Salesperson", 1, 75000),
+        (3,"Lawyer", 4, 300000),
+        (4,"Accountant", 3, 150000),
+        (5,"Software Engineer", 2, 160000),
+        (6,"Lead Engineer", 2, 175000),
+        (7,"Materials Engineer", 2, 160000);
 
 
 -- employees at company --

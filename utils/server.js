@@ -41,14 +41,6 @@ async function getAllEmployees() {
   return rows;
 }
 
-async function getDepartmentNames() {
-  console.log("ahoy");
-  const db = await getDBConnection();
-  //GROUP_CONCAT: https://stackoverflow.com/questions/662207/mysql-results-as-comma-separated-list
-  const [rows, fields] = await db.execute("SELECT department_name FROM department");
-  return rows;
-}
-
 async function addDepartment(departmentName) {
   console.log("hola");
   const db = await getDBConnection();
@@ -61,10 +53,11 @@ async function addRole(roleInfo) {
   console.log("good day");
   console.log(roleInfo);
   const db = await getDBConnection();
-
-  const [rows1, fields1] = await db.execute(`SELECT id FROM department WHERE department_name="${roleInfo.choices}"`);
+  // Get department ID (primary key)
+  const [rows1, fields1] = await db.execute(`SELECT id FROM department WHERE department_name="${roleInfo.department}"`);
   const departmentId = rows1[0].id;
   console.log(departmentId);
+  // The department ID is a foreign key in the role table
   const [rows, fields] = await db.execute(`INSERT INTO role (title, department_id, salary) 
                                            VALUES ("${roleInfo.title}",
                                            ${departmentId},
@@ -72,11 +65,25 @@ async function addRole(roleInfo) {
   return rows;
 }
 
-async function addEmployee() {
+async function addEmployee(employeeInfo) {
   console.log("good bye");
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM add employee");
+  // Get role ID (primary key)
+  const [rows1, fields1] = await db.execute(`SELECT id FROM role WHERE title="${employeeInfo.role}";`);
+  const roleId = rows1[0].id;
+  console.log(roleId);
+  // Get manager ID (primary key)
+  // Escape tick \`
+  const [rows2, fields2] = await db.execute(`SELECT id FROM employee WHERE CONCAT(\`first_name\`, ' ', \`last_name\`) = "${employeeInfo.manager}";`);
+  const managerId = rows2[0].id;
+  console.log(managerId);
+
+  const [rows, fields] = await db.execute(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                                           VALUES (${employee.firstName},
+                                                   ${employee.lastName},
+                                                   ${roleId},
+                                                   ${managerId});`);
   return rows;
 }
 
@@ -84,7 +91,10 @@ async function updateEmployeeRole() {
   console.log("adios");
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM update employee role");
+  const [rows, fields] = await db.execute(``);
+  // UPDATE EMPLOYEE
+  // SET role_id = whatever the new role ID is
+  // WHERE id = the id of the employee you want to update
   return rows;
 }
 
@@ -92,7 +102,9 @@ async function removeDepartment() {
   console.log("bueno");
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM remove department");
+  const [rows, fields] = await db.execute(``);
+  // DELETE FROM department
+  // WHERE id = the id of the department you want to delete
   return rows;
 }
 
@@ -100,7 +112,9 @@ async function removeRole() {
   console.log("mahalo");
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM remove role");
+  const [rows, fields] = await db.execute(``);
+  // DELETE FROM role
+  // WHERE id = the id of the role you want to delete
   return rows;
 }
 
@@ -108,7 +122,12 @@ async function removeEmployee() {
   console.log("good night");
   const db = await getDBConnection();
 
-  const [rows, fields] = await db.execute("SELECT * FROM remove employee");
+  const [rows, fields] = await db.execute(``);
+  // DELETE FROM employee
+  // WHERE id = the id of the employee you want to delete
+
+  // You will want to test this to see what happens if you try to delete a manager
+  // Remember their ID is a foreign key on other employee's records (manager_id)
   return rows;
 };
 
@@ -162,7 +181,6 @@ module.exports = {
   getAllDepartments: getAllDepartments,
   getAllRoles: getAllRoles,
   getAllEmployees: getAllEmployees,
-  getDepartmentNames: getDepartmentNames,
   addDepartment: addDepartment,
   addRole: addRole,
   addEmployee: addEmployee,

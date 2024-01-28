@@ -44,7 +44,7 @@ async function processResponse(response) {
     addRole();
   }
   if (response === "Add employee") {
-    console.table(await server.addEmployee());
+    addEmployee();
   }
   if (response === "Update employee role") {
     console.table(await server.updateEmployeeRole());
@@ -83,12 +83,12 @@ function addDepartment() {
 
 async function addRole() {
   // First, get all the current departments from the server
-  const departmentNames = await server.getDepartmentNames();
-  //console.log(departmentNames);
+  const departments = await server.getAllDepartments();
+  console.log(departments);
   // Loop through the department names to create a list of choices
   let choicesList = [];
-  for (let i = 0; i < departmentNames.length; i++) {
-    choicesList.push(departmentNames[i].department_name);
+  for (let i = 0; i < departments.length; i++) {
+    choicesList.push(departments[i].department_name);
   }
   const addRoleQuestions = [
     {
@@ -103,7 +103,7 @@ async function addRole() {
     },
     {
       type: "rawlist",
-      name: "choices",
+      name: "department",
       message: "Which department does the role belong to?",
       choices: choicesList
     }  
@@ -112,15 +112,67 @@ async function addRole() {
   inquirer
   .prompt(addRoleQuestions)
   .then(async (response) => {
+    // Third, insert the role
     // Pass the response to server.addRole
     console.table(await server.addRole(response));
   })
   .catch((err) => {
     console.log(err);
   });  
-  // Third, insert the role
-  //console.table(await server.addRole());
-  
+}
+
+async function addEmployee() {
+  // First, get all the current roles from the server
+  const roles = await server.getAllRoles();
+  //console.log(roles);
+  // Loop through the role names to create a list of choices
+  let roleChoicesList = [];
+  for (let i = 0; i < roles.length; i++) {
+    roleChoicesList.push(roles[i].title);
+  }
+  // Second, get all the current employees from the server
+  const employees = await server.getAllEmployees();
+  //console.log(employees);
+  // Loop through the employee names to create a list of choices
+  let managerChoicesList = [];
+  for (let i = 0; i < employees.length; i++) {
+    managerChoicesList.push(employees[i].first_name + " " + employees[i].last_name);
+  }
+  const addEmployeeQuestions = [
+    {
+      type: "input",
+      name: "firstName",
+      message: "Employee first name:"
+    },
+    {
+      type: "input",
+      name: "lastName",
+      message: "Employee last name:"
+    },
+    {
+      type: "rawlist",
+      name: "role",
+      message: "What is the employee's role",
+      choices: roleChoicesList
+    },
+    {
+      type: "rawlist",
+      name: "manager",
+      message: "Who is the employee's manager",
+      choices: managerChoicesList
+    }
+  ];
+  // Third, prompt the user for the role info (using the departments list)
+  inquirer
+  .prompt(addEmployeeQuestions)
+  .then(async (response) => {
+    // Fourth, insert the employee
+    // Pass the response to server.addEmployee
+    console.table(await server.addEmployee(response));
+  })
+  .catch((err) => {
+    console.log(err);
+  });   
 }
 
 function init() {
