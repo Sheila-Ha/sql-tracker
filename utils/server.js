@@ -1,31 +1,26 @@
 // Include packages needed for this application
-const inquirer = require("inquirer"); //npm special software - const variable can not be reassigned
-const mysql = require("mysql2/promise");
-const express = require("express");
+//const inquirer = require("inquirer"); //npm special software - const variable can not be reassigned
+const mysql = require("mysql2");
+const db = require("mysql-promise")();
+//const express = require("express");
 
-const PORT = process.env.PORT || 3301;
-const app = express();
+const options = {
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "employees_db",
+};
+db.configure(options, mysql);
 
-let roleChoices = [];
+// const PORT = process.env.PORT || 3301;
+// const app = express();
 
-function getDBConnection() {
-  return mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "employees_db",
-  });
-}
+// let roleChoices = [];
 
 function getAllDepartments() {
   console.log("hi");
-  getDBConnection().then((db) => {
-    console.log(db);
-    console.log(db.connnection())
-    const [rows, fields] = db.query("SELECT * FROM department");
-    return rows;
-
-  });
+  //console.log(db.query("SELECT * FROM department"));
+  return db.query("SELECT * FROM department");
 }
 
 function getAllRoles() {
@@ -48,7 +43,9 @@ function addDepartment(departmentName) {
   console.log("hola");
   const db = getDBConnection();
 
-  const [rows, fields] = db.execute(`INSERT INTO department (department_name) VALUES ("${departmentName}");`);
+  const [rows, fields] = db.execute(
+    `INSERT INTO department (department_name) VALUES ("${departmentName}");`
+  );
   return rows;
 }
 
@@ -57,11 +54,14 @@ function addRole(roleInfo) {
   console.log(roleInfo);
   const db = getDBConnection();
   // Get department ID (primary key)
-  const [rows1, fields1] = db.execute(`SELECT id FROM department WHERE department_name="${roleInfo.department}"`);
+  const [rows1, fields1] = db.execute(
+    `SELECT id FROM department WHERE department_name="${roleInfo.department}"`
+  );
   const departmentId = rows1[0].id;
   console.log(departmentId);
   // The department ID is a foreign key in the role table
-  const [rows, fields] = db.execute(`INSERT INTO role (title, department_id, salary) 
+  const [rows, fields] =
+    db.execute(`INSERT INTO role (title, department_id, salary) 
                                            VALUES ("${roleInfo.title}",
                                            ${departmentId},
                                            "${roleInfo.salary}")`);
@@ -73,17 +73,22 @@ function addEmployee(employeeInfo) {
   const db = getDBConnection();
 
   // Get role ID (primary key)
-  const [rows1, fields1] = db.execute(`SELECT id FROM role WHERE title="${employeeInfo.role}";`);
+  const [rows1, fields1] = db.execute(
+    `SELECT id FROM role WHERE title="${employeeInfo.role}";`
+  );
   const roleId = rows1[0].id;
   console.log(roleId);
   // Get manager ID (primary key)
-  // Escape tick \`   
+  // Escape tick \`
   // Concat first/last name
-  const [rows2, fields2] = db.execute(`SELECT id FROM employee WHERE CONCAT(\`first_name\`, ' ', \`last_name\`) = "${employeeInfo.manager}";`);
+  const [rows2, fields2] = db.execute(
+    `SELECT id FROM employee WHERE CONCAT(\`first_name\`, ' ', \`last_name\`) = "${employeeInfo.manager}";`
+  );
   const managerId = rows2[0].id;
   console.log(managerId);
 
-  const [rows, fields] = db.execute(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+  const [rows, fields] =
+    db.execute(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
                                            VALUES (${employee.firstName},
                                                    ${employee.lastName},
                                                    ${roleId},
@@ -133,7 +138,7 @@ function removeEmployee() {
   // You will want to test this to see what happens if you try to delete a manager
   // Remember their ID is a foreign key on other employee's records (manager_id)
   return rows;
-};
+}
 
 // //add employee function
 // function addEmployee() {
@@ -170,7 +175,6 @@ function removeEmployee() {
 //     },*/,
 //   ]);
 // }
-
 
 //default response for any other request (Not Found)
 // app.use((req, res) => {

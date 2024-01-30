@@ -29,7 +29,11 @@ const questions = [
 
 function processResponse(response) {
   if (response === "View all departments") {
-    console.table(server.getAllDepartments());
+    server.getAllDepartments().then(results => {
+      console.table(results[0]);
+      // TO DO -- see if the first column marked (index) can be removed
+      // or if there's a better way to return this or something to get rid of that
+    });
   }
   if (response === "View all roles") {
     console.table(server.getAllRoles());
