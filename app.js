@@ -457,76 +457,114 @@ function deleteDepartment() {
 
 //Delete role
 function deleteRole() {
-  const deleteRole = [
-    {
-      type: "input",
-      name: "role Name",
-      message: "What is the name of the deleted role?",
-    },
-  ];
-  inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
-    //Query database
-    console.log(deleteRoleResponse.roleName);
-    db.query(
-      `DELETE FROM department;
-          VALUES ("${deleteRoleResponse.roleName}");`,
-      (err, results) => {
-        //If err, log it and restart prompt
-        if (err) {
-          console.log(err);
-          // init();
+  //Get all roles from the database
+  db.query(`SELECT id, title FROM role`, (err, results) => {
+    // console.log(results);
+    //If err, log it and restart prompt
+    if (err) {
+      console.log(err);
+      // init();
+    }
+    // Create a list of roles for the user to choose from - for loop
+    let roleList = [];
+    for (let i = 0; i < results.length; i++) {
+      roleList.push({ value: results[i].id, name: results[i].title });
+    }
+    const deleteRole = [
+      {
+        type: "rawlist",
+        name: "role",
+        message: "What is the name of the deleted role?",
+        choices: roleList,
+      },
+    ];
+    inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
+      
+      // ***Maybe check if the role is in use before deleting***
+      // ***If so, display a message saying it can't be deleted***
+      // ***Else, proceed with the delete***
+
+      //Query database
+      //console.log(deleteRoleResponse);
+      db.query(
+        `DELETE FROM role
+         WHERE id = "${deleteRoleResponse.role}";`,
+        (err, results) => {
+          //If err, log it and restart prompt
+          if (err) {
+            console.log(err);
+            // init();
+          }
+          db.query(`SELECT * FROM role`, (err, results) => {
+            //console.log(results);
+            //If err, log it and restart prompt
+            if (err) {
+              console.log(err);
+              // init();
+            }
+            //Display result and restart prompts
+            console.table(results);
+            init();
+          });
         }
-        // db.query(`SELECT * FROM role`, (err, results) => {
-        //   console.log(results);
-        //   //If err, log it and restart prompt
-        //   if (err) {
-        //     console.log(err);
-        //     // init();
-        //   }
-        //   //Display result and restart prompts
-        //   console.table(results);
-        //   init();
-        // });
-      }
-    );
+      );
+    });
   });
 }
 
 //Delete an employee
 function deleteEmployee() {
-  const deleteEmployee = [
-    {
-      type: "input",
-      name: "Employee Name",
-      message: "What is the name of the deleted role?",
-    },
-  ];
-  inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
-    //Query database
-    console.log(deleteRoleResponse.roleName);
-    db.query(
-      `DELETE FROM department;
-          VALUES ("${deleteRoleResponse.roleName}");`,
-      (err, results) => {
-        //If err, log it and restart prompt
-        if (err) {
-          console.log(err);
-          // init();
-        }
-        // db.query(`SELECT * FROM role`, (err, results) => {
-        //   console.log(results);
-        //   //If err, log it and restart prompt
-        //   if (err) {
-        //     console.log(err);
-        //     // init();
-        //   }
-        //   //Display result and restart prompts
-        //   console.table(results);
-        //   init();
-        // });
+  // Get all employees from the database
+  db.query(
+    `SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`,
+    (err, results) => {
+      //console.log(results);
+      //If err, log it and restart prompt
+      if (err) {
+        console.log(err);
+        // init();
       }
-    );
-  });
+      // Create a list of employees for the user to choose from - for loop
+      let employeeList = [];
+      for (let i = 0; i < results.length; i++) {
+        employeeList.push({ value: results[i].id, name: results[i].name });
+      }
+      const deleteEmployee = [
+        {
+          type: "rawlist",
+          name: "employee",
+          message: "What is the name of the deleted role?",
+          choices: employeeList,
+        },
+      ];
+      inquirer.prompt(deleteEmployee).then((deleteEmployeeResponse) => {
+        //Query database
+        console.log(deleteEmployeeResponse);
+        db.query(
+          `DELETE FROM employee
+          WHERE id = "${deleteEmployeeResponse.employee}";`,
+          (err, results) => {
+            //If err, log it and restart prompt
+            if (err) {
+              console.log(err);
+              // init();
+            }
+            db.query(`SELECT * FROM employee`, (err, results) => {
+              console.log(results);
+              //If err, log it and restart prompt
+              if (err) {
+                console.log(err);
+                // init();
+              }
+              //Display result and restart prompts
+              console.table(results);
+              init();
+            });
+          }
+        );
+      });
+    }
+  );
 }
 
 init();
