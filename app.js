@@ -260,77 +260,80 @@ function addEmployee() {
 }
 
 //Update an employee
-// function updateEmployeeRole() {
-//   // Get all employees from the database
-//   db.query(`SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`, (err, results) => {
-//     console.log(results);
-//     //If err, log it and restart prompt
-//     if (err) {
-//       console.log(err);
-//       // init();
-//     }
-//     const employeeToUpdate = [
-//       {
-//         type: "rawlist",
-//         name: "employee",
-//         message: "Which employee would you like to update?",
-//         choices: results,
-//       },
-//     ];
-//     inquirer.prompt(employeeToUpdate).then((response) => {
-//       console.log('test 1');
-//       console.log(response);
-//       console.log('test 2');
-//       console.log(response.id);
-//       const selectedEmployee = response.employee;
-//       console.log('test 3');
-//       console.log(selectedEmployee);
-//       // Get all roles from the database
-//       db.query(`SELECT id, title FROM role`, (err, results) => {
-//         // console.log(results);
-//         //If err, log it and restart prompt
-//         if (err) {
-//           console.log(err);
-//           // init();
-//         }
-//         // Prompt the user to pick a role for the employee
-//         const employeeRole = [
-//           {
-//             type: "rawlist",
-//             name: "role",
-//             message: "Which role would you like to assign to the employee?",
-//             choices: results,
-//           },
-//         ];
-//         inquirer.prompt(employeeRole).then((response) => {
-//           //If err, log it and restart prompt
-//           if (err) {
-//             console.log(err);
-//             // init();
-//           }
-//           console.log(response);
-//           const selectedRole = response.role;
-//           console.log(selectedRole);
-//           Update the employee's role in the database
-//           db.query(
-//             `UPDATE employee SET role_id = (SELECT id FROM role WHERE title = "${selectedRole}") 
-//                 WHERE id = (SELECT id FROM employee WHERE CONCAT(\`first_name\`, ' ', \`last_name\`) = "${selectedEmployee}")`,
-//             (err, results) => {
-//               //If err, log it and restart prompt
-//               if (err) {
-//                 console.log(err);
-//                 // init();
-//               }
-//               console.log(
-//                 selectedEmployee + "'s role has been updated to " + selectedRole
-//               );
-//             }
-//           );
-//         });
-//       });
-//     });
-//   });
-// }
+function updateEmployeeRole() {
+  // Get all employees from the database
+  db.query(`SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`, (err, results) => {
+    //console.log(results);
+    //If err, log it and restart prompt
+    if (err) {
+      console.log(err);
+      // init();
+    }
+    // Create a list of employees for the user to choose from
+    let employeeList = [];
+    for (let i = 0; i < results.length; i++) {
+      employeeList.push({value: results[i].id, name: results[i].name});
+    }
+    //console.log(employeeList);
+    const employeeToUpdate = [
+      {
+        type: "rawlist",
+        name: "employee",
+        message: "Which employee would you like to update?",
+        choices: employeeList,
+      },
+    ];
+    inquirer.prompt(employeeToUpdate).then((response) => {
+      const selectedEmployee = response.employee;
+      //console.log(selectedEmployee);
+      // Get all roles from the database
+      db.query(`SELECT id, title FROM role`, (err, results) => {
+        // console.log(results);
+        //If err, log it and restart prompt
+        if (err) {
+          console.log(err);
+          // init();
+        }
+        // Create a list of roles for the user to choose from
+        let roleList = [];
+        for (let i = 0; i < results.length; i++) {
+          roleList.push({value: results[i].id, name: results[i].title});
+        }    
+        // Prompt the user to pick a role for the employee
+        const employeeRole = [
+          {
+            type: "rawlist",
+            name: "role",
+            message: "Which role would you like to assign to the employee?",
+            choices: roleList,
+          },
+        ];
+        inquirer.prompt(employeeRole).then((response) => {
+          //If err, log it and restart prompt
+          if (err) {
+            console.log(err);
+            // init();
+          }
+          //console.log(response);
+          const selectedRole = response.role;
+          //console.log(selectedRole);
+          //Update the employee's role in the database
+          db.query(`UPDATE employee SET role_id = ${selectedRole} WHERE id = ${selectedEmployee};`,
+            (err, results) => {
+              //If err, log it and restart prompt
+              if (err) {
+                console.log(err);
+                // init();
+              }
+              console.log('Complete');
+              init();
+            }
+          );
+        });
+      });
+    });
+  });
+}
 
 //Delete a department
 function deleteDepartment() {
@@ -345,8 +348,7 @@ function deleteDepartment() {
     //Query database
     console.log(deleteDepartmentResponse.roleName);
     db.query(
-      `DELETE FROM department;
-          VALUES ("${deleteDepartmentResponse.departmentName}");`,
+      `DELETE FROM department WHERE department_name="${deleteDepartmentResponse.roleName}"`,
       (err, results) => {
         //If err, log it and restart prompt
         if (err) {
