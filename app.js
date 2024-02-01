@@ -457,8 +457,8 @@ function deleteDepartment() {
 
 //Delete role
 function deleteRole() {
-  //Get all roles from the database
-  db.query(`SELECT id, title FROM role`, (err, results) => {
+  //Get all roles from the database that are not assigned to an employee
+  db.query(` SELECT role.id, role.title FROM role LEFT JOIN employee ON role.id = employee.role_id WHERE employee.role_id IS NULL;`, (err, results) => {
     // console.log(results);
     //If err, log it and restart prompt
     if (err) {
@@ -474,15 +474,11 @@ function deleteRole() {
       {
         type: "rawlist",
         name: "role",
-        message: "What is the name of the deleted role?",
+        message: "Select a role that is unassigned to delete?",
         choices: roleList,
       },
     ];
     inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
-      
-      // ***Maybe check if the role is in use before deleting***
-      // ***If so, display a message saying it can't be deleted***
-      // ***Else, proceed with the delete***
 
       //Query database
       //console.log(deleteRoleResponse);
