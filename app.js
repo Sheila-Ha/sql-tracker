@@ -219,7 +219,7 @@ function addRole() {
             // init();
           }
           db.query(`SELECT * FROM role`, (err, results) => {
-            console.log(results);
+            // console.log(results);
             //If err, log it and restart prompt
             if (err) {
               console.log(err);
@@ -558,7 +558,7 @@ function deleteEmployee() {
       ];
       inquirer.prompt(deleteEmployee).then((deleteEmployeeResponse) => {
         //Query database
-        console.log(deleteEmployeeResponse);
+        // console.log(deleteEmployeeResponse);
         db.query(
           `DELETE FROM employee
           WHERE id = "${deleteEmployeeResponse.employee}";`,
@@ -569,7 +569,7 @@ function deleteEmployee() {
               // init();
             }
             db.query(`SELECT * FROM employee`, (err, results) => {
-              console.log(results);
+              // console.log(results);
               //If err, log it and restart prompt
               if (err) {
                 console.log(err);
