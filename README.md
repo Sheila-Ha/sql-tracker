@@ -2,7 +2,9 @@
 by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Description <!-- omit from toc -->
-- This is a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.
+- This is a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.  
+  ![alt text](assets/img/logo.png)
+
 
 ## Table of Contents <!-- omit from toc -->
   
@@ -19,11 +21,12 @@ by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue
     
 
 ## Installation
-- In order type the follow commands into your terminal to install the needed dependancies.
-  - npm init
+- This program is run with inquirer@8.2.4 and mysql2@3.8.0
+   - npm init  
   - npm install npm i inquirer@8.2.4  
   - npm install i mysql2
   - install console-table
+ 
     
   
 
@@ -64,22 +67,32 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role  
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database  
 
-- Database schema showing the three tables  
+- Database schema showing the three tables that I have created 
 - 
   ![Alt text](assets/img/eer_diagram.png)
     
       
 ## Usage 
   - Termianl command line
-    - (type) npm start  
-![Alt text](assets/img/npm_start.png)
-    - As you hit the down arrow you will move further down the options to deletion choices. 
-   
-      ![Alt text](assets/img/npm_start_delete.png)  
-  - SQL  
-    - Log in and 
-    ![alt text](assets/img/SQL_create_database.png)
+    - (type) npm start
+      - Use arrow up and down to highlight your choice and hit enter  
+    ![alt text](assets/img/npm_start.png)  
+       - Option 8, 9, and 10 are added functions  
 
+          ![Alt text](assets/img/npm_start_delete.png)  
+
+      - Showing proper responses to your selection  
+      ![alt text](<assets/img/view em_dep_role1.png>)
+  - SQL  - Loading/Populating your database -
+
+    - Log into SQL by typing  "mysql -u root -p"  
+      - Password = "password"  
+      - Copy your schema file and paste into sql - hit enter  
+  
+         ![alt text](<assets/img/SQL schema.png>)  
+      -  Copy your seeds file and paste into sql - hit enter  
+       
+          ![alt text](<assets/img/SQL seeds.png>) 
 
   DEMO: (https://app.screencast.com)
 

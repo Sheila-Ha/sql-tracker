@@ -1,13 +1,3 @@
--- Employees at company --
-INSERT INTO employee (id,first_name,last_name,role_id,manager_id)
-VALUES   (1, "Bob", "Miller", 1, NULL),
-         (2, "Ann", "Atwood", 2, NULL),
-         (3, "Sue", "Woods", 3, 1),
-         (4, "Tom", "Anderson", 4, 3),
-         (5, "Amy", "Waters", 6, 2),
-         (6, "Will", "Thomas", 5, 5),
-         (7, "ED", "Thompson", 6, NULL);
-
 -- Department name --
 INSERT INTO department (id,department_name)
 VALUES  (1,"Sales"),
@@ -24,5 +14,15 @@ VALUES  (1,"Sales Manager", 1, 100000),
         (5,"Software Engineer", 2, 160000),
         (6,"Lead Engineer", 2, 175000),
         (7,"Materials Engineer", 2, 160000);
+
+-- Employees at company --
+INSERT INTO employee (id,first_name,last_name,role_id,manager_id)
+VALUES   (1, "Bob", "Miller", 1, NULL),
+         (2, "Ann", "Atwood", 2, NULL),
+         (3, "Sue", "Woods", 3, 1),
+         (4, "Tom", "Anderson", 4, 3),
+         (5, "Amy", "Waters", 6, 2),
+         (6, "Will", "Thomas", 5, 5),
+         (7, "ED", "Thompson", 6, NULL);
 
 
