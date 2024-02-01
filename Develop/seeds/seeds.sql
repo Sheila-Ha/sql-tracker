@@ -23,6 +23,6 @@ VALUES   (1, "Bob", "Miller", 1, NULL),
          (4, "Tom", "Anderson", 4, 3),
          (5, "Amy", "Waters", 6, 2),
          (6, "Will", "Thomas", 5, 5),
-         (7, "ED", "Thompson", 6, NULL);
+         (7, "Ed", "Thompson", 6, NULL);
 
 

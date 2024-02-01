@@ -1,8 +1,8 @@
 //Dependencies / packages needed for this application
 const inquirer = require("inquirer");
 const db = require("./utils/server");
-const logo = require('asciiart-logo');
-const config = require('./package.json');
+const logo = require("asciiart-logo");
+const config = require("./package.json");
 console.log(logo(config).render());
 
 function init() {
@@ -34,7 +34,7 @@ function init() {
       if (response.menu == "View all employees") {
         viewAllEmployees();
       }
-       //View all departments
+      //View all departments
       else if (response.menu == "View all departments") {
         viewAllDepartments();
       }
@@ -76,21 +76,24 @@ function init() {
 // See employees
 function viewAllEmployees() {
   //Query database
-  db.query(`SELECT E.id, CONCAT(E.first_name, ' ', E.last_name) AS Name, department_name AS Department, title AS Title, salary AS Salary, CONCAT(M.first_name, ' ', M.last_name) AS Manager
+  db.query(
+    `SELECT E.id, CONCAT(E.first_name, ' ', E.last_name) AS Name, department_name AS Department, title AS Title, salary AS Salary, CONCAT(M.first_name, ' ', M.last_name) AS Manager
   FROM employee E
   INNER JOIN role on E.role_id = role.id
   INNER JOIN department on role.department_id = department.id
-  LEFT JOIN employee M ON E.manager_id = M.id;` , (err, results) => {
-    // console.log(results);
-    //If err, log it and restart prompt
-    if (err) {
-      console.log(err);
-      // init();
+  LEFT JOIN employee M ON E.manager_id = M.id;`,
+    (err, results) => {
+      // console.log(results);
+      //If err, log it and restart prompt
+      if (err) {
+        console.log(err);
+        // init();
+      }
+      //Display result and restart prompts
+      console.table(results);
+      init();
     }
-    //Display result and restart prompts
-    console.table(results);
-    init();
-  });
+  );
 }
 
 //See departments
@@ -124,7 +127,6 @@ function viewAllRoles() {
     init();
   });
 }
-
 
 //Add a new department
 function addDepartment() {
@@ -269,13 +271,13 @@ function addEmployee() {
           {
             type: "input",
             name: "employeeFirstName",
-            message: "What is the first name of the new employee?",
+            message: "Employee first name:",
           },
           //Employee last name
           {
             type: "input",
             name: "employeeLastName",
-            message: "What is the last name of the new employee?",
+            message: "Employee last name:",
           },
           //Select role
           {
@@ -288,18 +290,18 @@ function addEmployee() {
           {
             type: "rawlist",
             name: "manager",
-            message: "Who is the employee's manager?",
+            message: "Who is their manager?",
             choices: employeeList,
           },
         ];
-        console.log(results);
+        // console.log(results);
         //If err, log it and restart prompt
         if (err) {
           console.log(err);
           init();
         }
         inquirer.prompt(addEmployee).then((newEmployeeResponse) => {
-          console.log(newEmployeeResponse);
+          //console.log(newEmployeeResponse);
           //Query database
           db.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id)
@@ -310,8 +312,9 @@ function addEmployee() {
                 console.log(err);
                 // init();
               }
+              //console.log(results);
               db.query(`SELECT * FROM employee`, (err, results) => {
-                console.log(results);
+                // console.log(results);
                 //If err, log it and restart prompt
                 if (err) {
                   console.log(err);
@@ -398,8 +401,17 @@ function updateEmployeeRole() {
                   console.log(err);
                   // init();
                 }
-                console.log("Complete");
-                init();
+                db.query(`SELECT * FROM employee`, (err, results) => {
+                  // console.log(results);
+                  //If err, log it and restart prompt
+                  if (err) {
+                    console.log(err);
+                    // init();
+                  }
+                  //Display result and restart prompts
+                  console.table(results);
+                  init();
+                });
               }
             );
           });
@@ -412,7 +424,7 @@ function updateEmployeeRole() {
 //Delete a department
 function deleteDepartment() {
   //Get all departments from the database
-  db.query(`SELECT  id, department_name FROM department`, (err, results) => {
+  db.query(`SELECT department.id, department_name FROM department LEFT JOIN role ON department.id = role.department_id WHERE role.department_id IS NULL;`, (err, results) => {
     //console.log(results);
     //If err, log it and restart prompt
     if (err) {
@@ -431,24 +443,24 @@ function deleteDepartment() {
     const deleteDepartment = [
       {
         type: "rawlist",
-        name: "department Name",
-        message: "What department do you want to delete?",
+        name: "department",
+        message: "Select a department that is unassigned to delete:",
         choices: departmentList,
       },
     ];
     inquirer.prompt(deleteDepartment).then((deleteDepartmentResponse) => {
       //Query database
-      console.log(deleteDepartmentResponse.roleName);
+      //console.log(deleteDepartmentResponse);
       db.query(
-        `DELETE FROM department WHERE department_name="${deleteDepartmentResponse.roleName}"`,
+        `DELETE FROM department WHERE id="${deleteDepartmentResponse.department}"`,
         (err, results) => {
           //If err, log it and restart prompt
           if (err) {
             console.log(err);
             // init();
           }
-          db.query(`SELECT * FROM role`, (err, results) => {
-            console.log(results);
+          db.query(`SELECT * FROM department`, (err, results) => {
+            //console.log(results);
             //If err, log it and restart prompt
             if (err) {
               console.log(err);
@@ -467,54 +479,56 @@ function deleteDepartment() {
 //Delete role
 function deleteRole() {
   //Get all roles from the database that are not assigned to an employee
-  db.query(` SELECT role.id, role.title FROM role LEFT JOIN employee ON role.id = employee.role_id WHERE employee.role_id IS NULL;`, (err, results) => {
-    // console.log(results);
-    //If err, log it and restart prompt
-    if (err) {
-      console.log(err);
-      // init();
-    }
-    // Create a list of roles for the user to choose from - for loop
-    let roleList = [];
-    for (let i = 0; i < results.length; i++) {
-      roleList.push({ value: results[i].id, name: results[i].title });
-    }
-    const deleteRole = [
-      {
-        type: "rawlist",
-        name: "role",
-        message: "Select a role that is unassigned to delete?",
-        choices: roleList,
-      },
-    ];
-    inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
-
-      //Query database
-      //console.log(deleteRoleResponse);
-      db.query(
-        `DELETE FROM role
+  db.query(
+    ` SELECT role.id, role.title FROM role LEFT JOIN employee ON role.id = employee.role_id WHERE employee.role_id IS NULL;`,
+    (err, results) => {
+      // console.log(results);
+      //If err, log it and restart prompt
+      if (err) {
+        console.log(err);
+        // init();
+      }
+      // Create a list of roles for the user to choose from - for loop
+      let roleList = [];
+      for (let i = 0; i < results.length; i++) {
+        roleList.push({ value: results[i].id, name: results[i].title });
+      }
+      const deleteRole = [
+        {
+          type: "rawlist",
+          name: "role",
+          message: "Select a role that is unassigned to delete:",
+          choices: roleList,
+        },
+      ];
+      inquirer.prompt(deleteRole).then((deleteRoleResponse) => {
+        //Query database
+        //console.log(deleteRoleResponse);
+        db.query(
+          `DELETE FROM role
          WHERE id = "${deleteRoleResponse.role}";`,
-        (err, results) => {
-          //If err, log it and restart prompt
-          if (err) {
-            console.log(err);
-            // init();
-          }
-          db.query(`SELECT * FROM role`, (err, results) => {
-            //console.log(results);
+          (err, results) => {
             //If err, log it and restart prompt
             if (err) {
               console.log(err);
               // init();
             }
-            //Display result and restart prompts
-            console.table(results);
-            init();
-          });
-        }
-      );
-    });
-  });
+            db.query(`SELECT * FROM role`, (err, results) => {
+              //console.log(results);
+              //If err, log it and restart prompt
+              if (err) {
+                console.log(err);
+                // init();
+              }
+              //Display result and restart prompts
+              console.table(results);
+              init();
+            });
+          }
+        );
+      });
+    }
+  );
 }
 
 //Delete an employee
