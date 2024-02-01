@@ -27,17 +27,17 @@ function init() {
     ])
     .then((response) => {
       // console.log(response);
-      //View all departments
-      if (response.menu == "View all departments") {
+      //View all employees
+      if (response.menu == "View all employees") {
+        viewAllEmployees();
+      }
+       //View all departments
+      else if (response.menu == "View all departments") {
         viewAllDepartments();
       }
       //View all roles
       else if (response.menu == "View all roles") {
         viewAllRoles();
-      }
-      //View all employees
-      else if (response.menu == "View all employees") {
-        viewAllEmployees();
       }
       //Add a department
       else if (response.menu == "Add department") {
@@ -68,6 +68,22 @@ function init() {
         updateEmployeeRole();
       }
     });
+}
+
+// See employees
+function viewAllEmployees() {
+  //Query database
+  db.query(`SELECT * FROM employee`, (err, results) => {
+    // console.log(results);
+    //If err, log it and restart prompt
+    if (err) {
+      console.log(err);
+      // init();
+    }
+    //Display result and restart prompts
+    console.table(results);
+    init();
+  });
 }
 
 //See departments
@@ -102,21 +118,7 @@ function viewAllRoles() {
   });
 }
 
-// See employees
-function viewAllEmployees() {
-  //Query database
-  db.query(`SELECT * FROM employee`, (err, results) => {
-    // console.log(results);
-    //If err, log it and restart prompt
-    if (err) {
-      console.log(err);
-      // init();
-    }
-    //Display result and restart prompts
-    console.table(results);
-    init();
-  });
-}
+
 //Add a new department
 function addDepartment() {
   const addDepartment = [

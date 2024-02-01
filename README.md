@@ -63,16 +63,24 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role  
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database  
 
+![Alt text](assets/img/eer_diagram.png)
     
   
   ### Wireframe
   [My Wireframe]()
       
 ## Usage 
-  - In the termianl command line type in 
-    - npm start
+  - In the termianl command line
+    - (type) npm start  
+![Alt text](assets/img/npm_start.png)
+    - As you hit the down arrow you will move further down the options to deletion choices.
+     ![Alt text](assets/img/npm_start_delete.png)  
+- SQL  logged into SQL and creating database and tables to view
 
-   ![Screenshot](utils/node_index.js_questions.png)
+  ![Alt text](assets/img/SQL_create_database.png)
+
+
+
 
   DEMO: (https://app.screencast.com)
 
