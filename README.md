@@ -9,13 +9,11 @@ by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue
 - [Installation](#installation)
   - [User Story](#user-story)
   - [Acceptance Criteria](#acceptance-criteria)
-  - [Wireframe](#wireframe)
 - [Usage](#usage)
 - [Features](#features)
 - [Challenges](#challenges)
 - [Contributing](#contributing)
 - [License](#license)
-- [Testing](#testing)
 - [Questions](#questions)
 - [Badges](#badges)
     
@@ -27,6 +25,9 @@ by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue
   - npm install i mysql2
   - install console-table
     
+  
+
+
   
   ### User Story
 * AS A business owner  
@@ -63,23 +64,21 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role  
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database  
 
-![Alt text](assets/img/eer_diagram.png)
+- Database schema showing the three tables  
+- 
+  ![Alt text](assets/img/eer_diagram.png)
     
-  
-  ### Wireframe
-  [My Wireframe]()
       
 ## Usage 
-  - In the termianl command line
+  - Termianl command line
     - (type) npm start  
 ![Alt text](assets/img/npm_start.png)
-    - As you hit the down arrow you will move further down the options to deletion choices.
-     ![Alt text](assets/img/npm_start_delete.png)  
-- SQL  logged into SQL and creating database and tables to view
-
-  ![Alt text](assets/img/SQL_create_database.png)
-
-
+    - As you hit the down arrow you will move further down the options to deletion choices. 
+   
+      ![Alt text](assets/img/npm_start_delete.png)  
+  - SQL  
+    - Log in and 
+    ![alt text](assets/img/SQL_create_database.png)
 
 
   DEMO: (https://app.screencast.com)
@@ -89,10 +88,13 @@ THEN I am prompted to select an employee to update and their new role and this i
 2. Delete Role
 3. Delete Employee
 
-## Challenges
-- Starting from a blank slate to create application  
-- Correct syntax for add and updating  
-- Starting in async/await and switch prompt/.then  
+## Challenges  
+- Starting in async/await and switch prompt/.then 
+- Proper syntax for db.query involving SELECT, VALUES, JOIN, INNER JOIN and etc
+  - Had to create E.role_id and M.role_id (employee/manager) because I needed to pull same employees for two different requests
+- Ran out of time   
+  - Testing 
+  - Adding color 
   
 ## Contributing
 [NPM](https://www.npmjs.com/package/inquirer/v/8.2.4?activeTab=readme#installation)  
@@ -102,19 +104,15 @@ THEN I am prompted to select an employee to update and their new role and this i
 [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web)  
 [Node.js](https://nodejs.org/docs/latest/api/)  
 [Stack Overflow](https://stackoverflow.com/?newreg=67d94556b887449fa2885dadf54a5439)  
-[HTML Cheatsheet](https://htmlcheatsheet.com/js/)  
+[JS Cheatsheet](https://htmlcheatsheet.com/js/)  
 [W3school](https://www.w3schools.com/)  
 [DEV](https://dev.to/envoy_/150-badges-for-github-pnk#contact)  
 [Shields](https://shields.io/)  
-[tldraw](https://www.tldraw.com/)  
+ 
 
 ## License  
 ![Github license](https://img.shields.io/badge/license-MIT-blue.svg)  
 This project is licensed under MIT
-
-
-## Testing
-There is currently no testing in place
     
 
 ## Questions

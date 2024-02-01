@@ -1,6 +1,9 @@
 //Dependencies / packages needed for this application
 const inquirer = require("inquirer");
 const db = require("./utils/server");
+const logo = require('asciiart-logo');
+const config = require('./package.json');
+console.log(logo(config).render());
 
 function init() {
   //User prompted with a list of choices
@@ -12,9 +15,9 @@ function init() {
         message: "What would you like to do?",
         //An array of choices to select from
         choices: [
+          "View all employees",
           "View all departments",
           "View all roles",
-          "View all employees",
           "Add department",
           "Add role",
           "Add employee",
@@ -73,7 +76,11 @@ function init() {
 // See employees
 function viewAllEmployees() {
   //Query database
-  db.query(`SELECT * FROM employee`, (err, results) => {
+  db.query(`SELECT E.id, CONCAT(E.first_name, ' ', E.last_name) AS Name, department_name AS Department, title AS Title, salary AS Salary, CONCAT(M.first_name, ' ', M.last_name) AS Manager
+  FROM employee E
+  INNER JOIN role on E.role_id = role.id
+  INNER JOIN department on role.department_id = department.id
+  LEFT JOIN employee M ON E.manager_id = M.id;` , (err, results) => {
     // console.log(results);
     //If err, log it and restart prompt
     if (err) {

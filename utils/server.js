@@ -7,7 +7,7 @@ const options = {
   host: "localhost",
   user: "root",
   password: "password",
-  database: "employees_db",
+  database: "employee_db",
 };
 db.configure(options, mysql);
 
