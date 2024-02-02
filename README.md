@@ -94,7 +94,9 @@ THEN I am prompted to select an employee to update and their new role and this i
        
           ![alt text](<assets/img/SQL seeds.png>) 
 
-  DEMO: (https://app.screencast.com)
+
+-   ### DEMO:  
+    - (https://app.screencast.com/Fqo3eB1qLax79)
 
 ## Features  
 1. Delete Department
@@ -102,12 +104,14 @@ THEN I am prompted to select an employee to update and their new role and this i
 3. Delete Employee
 
 ## Challenges  
-- Starting in async/await and switch prompt/.then 
-- Proper syntax for db.query involving SELECT, VALUES, JOIN, INNER JOIN and etc
-  - Had to create E.role_id and M.role_id (employee/manager) because I needed to pull same employees for two different requests
+- Starting in async/await and switching to promises.  
+- Proper syntax for db.query involving SELECT, VALUES, JOIN, INNER JOIN and etc.  
+- Had to create E.role_id and M.role_id (employee/manager) because I needed to pull same employees for two different requests.  
+- Not realizing how much longer this assignment was going to take.  
+- I used mysql2 vs createConnection and it would puke consecutively after calling anything on the 11 time.  
+  
 - Ran out of time   
   - Testing 
-  - Adding color 
   
 ## Contributing
 [NPM](https://www.npmjs.com/package/inquirer/v/8.2.4?activeTab=readme#installation)  
