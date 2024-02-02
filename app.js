@@ -208,27 +208,28 @@ function addRole() {
     ];
     inquirer.prompt(addRole).then((addRoleResponse) => {
       //Query database
-      // console.log(roleNameResponse.roleName);
+      // console.log(addRoleResponse);
       db.query(
         `INSERT INTO role (title, salary, department_id)
           VALUES ("${addRoleResponse.roleName}","${addRoleResponse.salary}","${addRoleResponse.department}");`,
         (err, results) => {
+          // console.log(results);
           //If err, log it and restart prompt
           if (err) {
             console.log(err);
             // init();
           }
-          db.query(`SELECT * FROM role`, (err, results) => {
-            // console.log(results);
-            //If err, log it and restart prompt
-            if (err) {
-              console.log(err);
-              // init();
-            }
-            //Display result and restart prompts
-            console.table(results);
-            init();
-          });
+db.query(`SELECT * FROM role`, (err, results) => {
+           // console.log(results);
+          //If err, log it and restart prompt
+          if (err) {
+            console.log(err);
+            // init();
+          }
+          //Display result and restart prompts
+          console.table(results);
+          init();
+});
         }
       );
     });
@@ -424,56 +425,59 @@ function updateEmployeeRole() {
 //Delete a department
 function deleteDepartment() {
   //Get all departments from the database
-  db.query(`SELECT department.id, department_name FROM department LEFT JOIN role ON department.id = role.department_id WHERE role.department_id IS NULL;`, (err, results) => {
-    //console.log(results);
-    //If err, log it and restart prompt
-    if (err) {
-      console.log(err);
-      // init();
-    }
-    // Create a list of departments for the user to choose from - for loop
-    let departmentList = [];
-    for (let i = 0; i < results.length; i++) {
-      departmentList.push({
-        value: results[i].id,
-        name: results[i].department_name,
-      });
-    }
+  db.query(
+    `SELECT department.id, department_name FROM department LEFT JOIN role ON department.id = role.department_id WHERE role.department_id IS NULL;`,
+    (err, results) => {
+      //console.log(results);
+      //If err, log it and restart prompt
+      if (err) {
+        console.log(err);
+        // init();
+      }
+      // Create a list of departments for the user to choose from - for loop
+      let departmentList = [];
+      for (let i = 0; i < results.length; i++) {
+        departmentList.push({
+          value: results[i].id,
+          name: results[i].department_name,
+        });
+      }
 
-    const deleteDepartment = [
-      {
-        type: "rawlist",
-        name: "department",
-        message: "Select a department that is unassigned to delete:",
-        choices: departmentList,
-      },
-    ];
-    inquirer.prompt(deleteDepartment).then((deleteDepartmentResponse) => {
-      //Query database
-      //console.log(deleteDepartmentResponse);
-      db.query(
-        `DELETE FROM department WHERE id="${deleteDepartmentResponse.department}"`,
-        (err, results) => {
-          //If err, log it and restart prompt
-          if (err) {
-            console.log(err);
-            // init();
-          }
-          db.query(`SELECT * FROM department`, (err, results) => {
-            //console.log(results);
+      const deleteDepartment = [
+        {
+          type: "rawlist",
+          name: "department",
+          message: "Select a department that is unassigned to delete:",
+          choices: departmentList,
+        },
+      ];
+      inquirer.prompt(deleteDepartment).then((deleteDepartmentResponse) => {
+        //Query database
+        //console.log(deleteDepartmentResponse);
+        db.query(
+          `DELETE FROM department WHERE id="${deleteDepartmentResponse.department}"`,
+          (err, results) => {
             //If err, log it and restart prompt
             if (err) {
               console.log(err);
               // init();
             }
-            //Display result and restart prompts
-            console.table(results);
-            init();
-          });
-        }
-      );
-    });
-  });
+            db.query(`SELECT * FROM department`, (err, results) => {
+              //console.log(results);
+              //If err, log it and restart prompt
+              if (err) {
+                console.log(err);
+                // init();
+              }
+              //Display result and restart prompts
+              console.table(results);
+              init();
+            });
+          }
+        );
+      });
+    }
+  );
 }
 
 //Delete role
