@@ -292,7 +292,7 @@ function addEmployee() {
           {
             type: "rawlist",
             name: "role",
-            message: "What is their position?",
+            message: "What is their title?",
             choices: roleList,
           },
           //Select manager
@@ -547,7 +547,7 @@ function deleteRole() {
 function deleteEmployee() {
   // Get all employees from the database
   db.query(
-    `SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`,
+    `SELECT E.id, CONCAT(E.first_name, ' ', E.last_name) AS name FROM employee E LEFT JOIN employee M ON E.id = M.manager_id WHERE M.id IS NULL;`,
     (err, results) => {
       //console.log(results);
       //If err, log it and restart prompt
@@ -564,7 +564,7 @@ function deleteEmployee() {
         {
           type: "rawlist",
           name: "employee",
-          message: "What is the name of the deleted role?",
+          message: "Select an employee who is not a manger to delete:",
           choices: employeeList,
         },
       ];
