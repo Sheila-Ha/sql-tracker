@@ -29,46 +29,54 @@ function init() {
       },
     ])
     .then((response) => {
-      // console.log(response);
-      //View all employees
-      if (response.menu == "View all employees") {
-        viewAllEmployees();
-      }
-      //View all departments
-      else if (response.menu == "View all departments") {
-        viewAllDepartments();
-      }
-      //View all roles
-      else if (response.menu == "View all roles") {
-        viewAllRoles();
-      }
-      //Add a department
-      else if (response.menu == "Add department") {
-        addDepartment();
-      }
-      //Add a role
-      else if (response.menu == "Add role") {
-        addRole();
-      }
-      //Add an employee
-      else if (response.menu == "Add employee") {
-        addEmployee();
-      }
-      //Delete department
-      else if (response.menu == "Delete department") {
-        deleteDepartment();
-      }
-      //Delete role
-      else if (response.menu == "Delete role") {
-        deleteRole();
-      }
-      //Delete employee
-      else if (response.menu == "Delete employee") {
-        deleteEmployee();
-      }
-      //Choose to update employee role
-      else if (response.menu == "Update employee role") {
-        updateEmployeeRole();
+      try {
+        console.log(response);
+        console.log(response.menu);
+        //View all employees
+        if (response.menu == "View all employees") {
+          viewAllEmployees();
+        }
+        //View all departments
+        else if (response.menu == "View all departments") {
+          viewAllDepartments();
+        }
+        //View all roles
+        else if (response.menu == "View all roles") {
+          viewAllRoles();
+        }
+        //Add a department
+        else if (response.menu == "Add department") {
+          addDepartment();
+        }
+        //Add a role
+        else if (response.menu == "Add role") {
+          addRole();
+        }
+        //Add an employee
+        else if (response.menu == "Add employee") {
+          addEmployee();
+        }
+        //Delete department
+        else if (response.menu == "Delete department") {
+          deleteDepartment();
+        }
+        //Delete role
+        else if (response.menu == "Delete role") {
+          deleteRole();
+        }
+        //Delete employee
+        else if (response.menu == "Delete employee") {
+          deleteEmployee();
+        }
+        //Choose to update employee role
+        else if (response.menu == "Update employee role") {
+          updateEmployeeRole();
+        }
+        else {
+          console.log('An error has occurred');
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
 }
@@ -211,7 +219,7 @@ function addRole() {
       // console.log(addRoleResponse);
       db.query(
         `INSERT INTO role (title, salary, department_id)
-          VALUES ("${addRoleResponse.roleName}","${addRoleResponse.salary}","${addRoleResponse.department}");`,
+          VALUES ("${addRoleResponse.roleName}",${addRoleResponse.salary},${addRoleResponse.department});`,
         (err, results) => {
           // console.log(results);
           //If err, log it and restart prompt
@@ -219,17 +227,17 @@ function addRole() {
             console.log(err);
             // init();
           }
-db.query(`SELECT * FROM role`, (err, results) => {
-           // console.log(results);
-          //If err, log it and restart prompt
-          if (err) {
-            console.log(err);
-            // init();
-          }
-          //Display result and restart prompts
-          console.table(results);
-          init();
-});
+          db.query(`SELECT * FROM role`, (err, results) => {
+            // console.log(results);
+            //If err, log it and restart prompt
+            if (err) {
+              console.log(err);
+              // init();
+            }
+            //Display result and restart prompts
+            console.table(results);
+            init();
+          });
         }
       );
     });
@@ -306,7 +314,7 @@ function addEmployee() {
           //Query database
           db.query(
             `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-          VALUES ("${newEmployeeResponse.employeeFirstName}","${newEmployeeResponse.employeeLastName}","${newEmployeeResponse.role}","${newEmployeeResponse.manager}");`,
+          VALUES ("${newEmployeeResponse.employeeFirstName}","${newEmployeeResponse.employeeLastName}",${newEmployeeResponse.role},${newEmployeeResponse.manager});`,
             (err, results) => {
               //If err, log it and restart prompt
               if (err) {
