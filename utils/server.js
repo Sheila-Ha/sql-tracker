@@ -1,15 +1,16 @@
 // Include packages needed for this application
 const mysql = require("mysql2");
-const db = require("mysql-promise")();
-
-
-const options = {
+const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
   database: "employee_db",
-};
-db.configure(options, mysql);
+});
+db.connect(function (err) {
+  if (err) {
+    throw err;
+  }
+});
 
-//Export the server.js for use in app.js 
+//Export the server.js for use in app.js
 module.exports = db;
