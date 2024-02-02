@@ -21,15 +21,27 @@ by Sheila Hanson ![Github license](https://img.shields.io/badge/license-MIT-blue
     
 
 ## Installation
-- This program is run with inquirer@8.2.4 and mysql2@3.8.0
-   - npm init  
+- This program is run with inquirer@8.2.4 and mysql2@3.8.0  
+  - npm init  
   - npm install npm i inquirer@8.2.4  
   - npm install i mysql2
-  - install console-table
- 
-    
+  - install console-table  
+- Once the dependencies have been install
+- Database setup
+  - Install MySQL locally
+    - Run the schema.sql and seeds.sql files to set up the database schema and initial data  
+    - javascript const db = mysql.createConnection  
+      - host: "localhost",  user: "root", password: 'your_password_given', database: 'what_you_called_your_db'  
+-   Run MySQL in your CUI  
+      - enter: mysql -uroot -p  
+        - input your password  
+      - copy and paste your schema.sql file into your CUI  
+      - copy and past your seeds.sql file into your CUI  
+      - type: USE 'insert your file name here'_db; into your CUI  
   
-
+  - How to run the employee tracker in your terminal  
+       - type "npm start" into the CUI  
+       - you will be prompted to answer questions and can navigate the employee tracker
 
   
   ### User Story
@@ -73,6 +85,7 @@ THEN I am prompted to select an employee to update and their new role and this i
     
       
 ## Usage 
+- All usage comes from the CLI
   - Termianl command line
     - (type) npm start
       - Use arrow up and down to highlight your choice and hit enter  
